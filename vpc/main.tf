@@ -10,10 +10,18 @@ resource "aws_subnet" "subnet_public" {
   map_public_ip_on_launch = true
 }
 
+output "subnet_public_id" {
+  value = aws_subnet.subnet_public.id
+}
+
 # Criação da Subnet private 
 resource "aws_subnet" "subnet_private" {
   vpc_id     = aws_vpc.main_vpc.id
   cidr_block = "172.31.2.0/24"
+}
+
+output "subnet_private_id" {
+  value = aws_subnet.subnet_private.id
 }
 
 # Criação da Subnet private 2 
@@ -41,4 +49,10 @@ resource "aws_route_table" "public_rt" {
 resource "aws_route_table_association" "public_subnet_assoc" {
   subnet_id      = aws_subnet.subnet_public.id
   route_table_id = aws_route_table.public_rt.id
+}
+
+
+output "aws_vpc_id" {
+  # value = aws_instance.web_server.public_ip
+  value = aws_vpc.main_vpc.id 
 }
